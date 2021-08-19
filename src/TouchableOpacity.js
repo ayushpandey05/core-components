@@ -11,16 +11,16 @@ class TouchableOpacity extends React.Component {
   onMouseDown = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const { onMouseDown } = this.props;
+    const { onPressIn } = this.props;
     if (e?.button === 0) {
       !this.state.active && this.setState({ active: true });
     }
-    runFunction(onMouseDown, e);
+    runFunction(onPressIn, e);
   };
   onMouseUp = (e) => {
-    const { onMouseUp } = this.props;
+    const { onPressOut } = this.props;
     this.state.active && this.setState({ active: false });
-    runFunction(onMouseUp, e);
+    runFunction(onPressOut, e);
   };
   onMouseLeave = (e) => {
     const { onMouseLeave } = this.props;
@@ -37,10 +37,6 @@ class TouchableOpacity extends React.Component {
       activeOpacity = 0.2,
       style,
       children = void 0,
-      onMouseDown,
-      onMouseUp,
-      onPointerDown,
-      onPointerUp,
       ...restProps
     } = this.props;
     const { active } = this.state;
