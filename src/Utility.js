@@ -1,3 +1,5 @@
+import React from "react";
+
 const defaultStyle = {
   alignItems: "stretch",
   borderWidth: 0,
@@ -55,4 +57,23 @@ const getNumberOfLineStyle = ({ numberOfLines }) => {
   return ellipsesStyle;
 };
 
-export { defaultStyle, detectMob, runFunction, getNumberOfLineStyle };
+export const getRenderComponent = (Component, props) => {
+  if (React.isValidElement(Component)) {
+    return React.cloneElement(Component, props);
+  } else if (typeof Component === "function") {
+    if (Component.prototype && Component.prototype.isReactComponent) {
+      return <Component {...props} />;
+    } else {
+      return Component(props);
+    }
+  }
+  return Component;
+};
+
+export {
+  defaultStyle,
+  detectMob,
+  runFunction,
+  getNumberOfLineStyle,
+  getRenderComponent,
+};
