@@ -1,8 +1,14 @@
 import React from "react";
-import { defaultStyle } from "./Utility";
+import { defaultStyle, detectMob, runFunction } from "./Utility";
 import "./ScrollView.css";
 class ScrollView extends React.Component {
+  onMouseDown = (e) => {
+    const { onMouseDown } = this.props;
+    e.stopPropagation();
+    runFunction(onMouseDown, e);
+  };
   render() {
+    const isMobile = detectMob();
     const {
       children = void 0,
       style,
@@ -38,10 +44,18 @@ class ScrollView extends React.Component {
         modifiedClassName = `${className} hide-scroll-indicator`;
       }
     }
+
+    let extraProps = {};
+    if (isMobile) {
+      extraProps.onPointerDown = this.onMouseDown;
+    } else {
+      extraProps.onMouseDown = this.onMouseDown;
+    }
     return (
       <div
         className={modifiedClassName}
         style={{ flex: 1, ...defaultStyle, ...topViewStyle }}
+        {...extraProps}
       >
         <div style={{ ...defaultStyle, ...containerStyle }}>{children}</div>
       </div>

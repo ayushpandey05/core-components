@@ -10,6 +10,7 @@ import Platform from "./Platform";
 import ActivityIndicator from "./ActivityIndicator";
 import Dimensions from "./Dimensions";
 import Linking from "./Linking";
+import TextInput from "./TextInput";
 export {
   View,
   TouchableOpacity,
@@ -23,4 +24,5 @@ export {
   ActivityIndicator,
   Dimensions,
   Linking,
+  TextInput,
 };
