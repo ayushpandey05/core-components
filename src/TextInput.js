@@ -23,13 +23,33 @@ class TextInput extends React.Component {
     } else {
       extraProps.onMouseDown = this.onMouseDown;
     }
-    if (!mergedStyle?.padding) {
-      if (!mergedStyle?.paddingTop) {
-        mergedStyle.paddingTop = 6;
-      }
-      if (!mergedStyle?.paddingBottom) {
-        mergedStyle.paddingBottom = 6;
-      }
+
+    if (
+      mergedStyle?.paddingTop !== null &&
+      mergedStyle?.paddingTop !== undefined
+    ) {
+      mergedStyle.paddingTop = mergedStyle.paddingTop + 6;
+    } else if (
+      mergedStyle?.padding !== null &&
+      mergedStyle?.padding !== undefined
+    ) {
+      mergedStyle.paddingTop = mergedStyle.padding + 6;
+    } else {
+      mergedStyle.paddingTop = 16;
+    }
+
+    if (
+      mergedStyle?.paddingBottom !== null &&
+      mergedStyle?.paddingBottom !== undefined
+    ) {
+      mergedStyle.paddingBottom = mergedStyle.paddingBottom + 6;
+    } else if (
+      mergedStyle?.padding !== null &&
+      mergedStyle?.padding !== undefined
+    ) {
+      mergedStyle.paddingBottom = mergedStyle.padding + 6;
+    } else {
+      mergedStyle.paddingBottom = 16;
     }
     return (
       <input
