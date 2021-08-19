@@ -23,16 +23,20 @@ class TouchableOpacity extends React.Component {
     runFunction(onPressOut, e);
   };
   onMouseLeave = (e) => {
-    const { onMouseLeave } = this.props;
+    const { onMouseLeave, onPointerLeave } = this.props;
     this.state.active && this.setState({ active: false });
-    runFunction(onMouseLeave, e);
+    if (this.isMobile) {
+      runFunction(onPointerLeave, e);
+    } else {
+      runFunction(onMouseLeave, e);
+    }
   };
   onLongPress = (e) => {
     const { onLongPress } = this.props;
     runFunction(onLongPress, e);
   };
   render() {
-    const isMobile = detectMob();
+    this.isMobile = detectMob();
     const {
       activeOpacity = 0.2,
       style,
@@ -45,7 +49,7 @@ class TouchableOpacity extends React.Component {
       mergeedStyle = { ...mergeedStyle, opacity: activeOpacity };
     }
     let extraProps = {};
-    if (isMobile) {
+    if (this.isMobile) {
       extraProps.onPointerDown = this.onMouseDown;
       extraProps.onPointerUp = this.onMouseUp;
       extraProps.onPointerLeave = this.onMouseLeave;
