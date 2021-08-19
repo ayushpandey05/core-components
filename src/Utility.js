@@ -57,7 +57,7 @@ const getNumberOfLineStyle = ({ numberOfLines }) => {
   return ellipsesStyle;
 };
 
-export const getRenderComponent = (Component, props) => {
+const getRenderComponent = (Component, props) => {
   if (React.isValidElement(Component)) {
     return React.cloneElement(Component, props);
   } else if (typeof Component === "function") {
