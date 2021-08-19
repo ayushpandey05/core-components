@@ -38,7 +38,7 @@ class Image extends React.Component {
       }
     }
 
-    return <img style={modifiedStyle} src={modifiedSource} />;
+    return <img style={modifiedStyle} src={modifiedSource} alt='' />;
   }
 }
 
