@@ -7,6 +7,21 @@ class ScrollView extends React.Component {
     e.stopPropagation();
     runFunction(onMouseDown, e);
   };
+  onLayout = () => {
+    const { onLayout } = this.props;
+    this.scrollViewRef &&
+      onLayout &&
+      onLayout({
+        nativeEvent: { layout: this.scrollViewRef.getBoundingClientRect() },
+      });
+  };
+
+  componentDidMount() {
+    this.onLayout();
+  }
+  componentDidUpdate() {
+    this.onLayout();
+  }
   render() {
     const isMobile = detectMob();
     const {
@@ -17,6 +32,7 @@ class ScrollView extends React.Component {
       className,
       showsVerticalScrollIndicator = true,
       showsHorizontalScrollIndicator = true,
+      getRef,
     } = this.props;
 
     let modifiedClassName = className || "";
@@ -56,6 +72,10 @@ class ScrollView extends React.Component {
         className={modifiedClassName}
         style={{ flex: 1, ...defaultStyle, ...topViewStyle }}
         {...extraProps}
+        ref={(e) => {
+          this.scrollViewRef = e;
+          runFunction(getRef, e);
+        }}
       >
         <div style={{ ...defaultStyle, ...containerStyle }}>{children}</div>
       </div>

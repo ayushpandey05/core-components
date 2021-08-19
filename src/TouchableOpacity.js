@@ -35,12 +35,28 @@ class TouchableOpacity extends React.Component {
     const { onLongPress } = this.props;
     runFunction(onLongPress, e);
   };
+  onLayout = () => {
+    const { onLayout } = this.props;
+    this.touchableOpacityRef &&
+      onLayout &&
+      onLayout({
+        nativeEvent: { layout: this.touchableOpacityRef.getBoundingClientRect() },
+      });
+  };
+
+  componentDidMount() {
+    this.onLayout();
+  }
+  componentDidUpdate() {
+    this.onLayout();
+  }
   render() {
     this.isMobile = detectMob();
     const {
       activeOpacity = 0.2,
       style,
       children = void 0,
+      getRef,
       ...restProps
     } = this.props;
     const { active } = this.state;
@@ -65,6 +81,10 @@ class TouchableOpacity extends React.Component {
         onClick={this.onPress}
         onContextMenu={this.onLongPress}
         {...extraProps}
+        ref={(e) => {
+          this.touchableOpacityRef = e;
+          runFunction(getRef, e);
+        }}
       >
         {children}
       </div>
