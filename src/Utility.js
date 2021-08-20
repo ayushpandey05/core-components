@@ -83,6 +83,39 @@ const create_UUID = () => {
   return uuid;
 };
 
+const getModifiedSvgProps = (style) => {
+  const styleKeys = [
+    "margin",
+    "marginBottom",
+    "marginTop",
+    "marginLeft",
+    "marginRight",
+    "padding",
+    "paddingLeft",
+    "paddingRight",
+    "paddingTop",
+    "paddingBottom",
+  ];
+  let svgProps = {};
+  if (style?.height) {
+    svgProps.height = style.height;
+  }
+  if (style?.width) {
+    svgProps.width = style.width;
+  }
+  if (style?.color) {
+    svgProps.fill = style.color;
+  }
+  let svgStyle = {};
+  styleKeys.forEach((key) => {
+    if (style?.[key]) {
+      svgStyle[key] = style[key];
+    }
+  });
+  svgProps.style = svgStyle;
+  return svgProps;
+};
+
 export {
   defaultStyle,
   detectMob,
@@ -90,4 +123,5 @@ export {
   getNumberOfLineStyle,
   getRenderComponent,
   create_UUID,
+  getModifiedSvgProps,
 };

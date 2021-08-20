@@ -1,4 +1,6 @@
 import React from "react";
+import { getModifiedSvgProps } from "./Utility";
+
 class Image extends React.Component {
   render() {
     const { source, style } = this.props;
@@ -7,16 +9,7 @@ class Image extends React.Component {
 
     if (source?.svg) {
       let Component = source.svg;
-      let svgProps = {};
-      if (style?.width) {
-        svgProps.width = style.width;
-      }
-      if (style?.height) {
-        svgProps.height = style.height;
-      }
-      if (style?.color) {
-        svgProps.fill = style.color;
-      }
+      let svgProps = getModifiedSvgProps(style);
       return <Component {...svgProps} />;
     }
 
@@ -38,7 +31,7 @@ class Image extends React.Component {
       }
     }
 
-    return <img style={modifiedStyle} src={modifiedSource} alt='' />;
+    return <img style={modifiedStyle} src={modifiedSource} alt="" />;
   }
 }
 
