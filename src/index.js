@@ -11,6 +11,7 @@ import ActivityIndicator from "./ActivityIndicator";
 import Dimensions from "./Dimensions";
 import Linking from "./Linking";
 import TextInput from "./TextInput";
+import Modal from "./Modal";
 export {
   View,
   TouchableOpacity,
@@ -25,4 +26,5 @@ export {
   Dimensions,
   Linking,
   TextInput,
+  Modal,
 };
