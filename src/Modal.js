@@ -4,18 +4,14 @@ class Modal extends React.Component {
   showModal = () => {
     const { transparent, children } = this.props;
     this.modalWrapper = document.createElement("div");
-    this.modalWrapper.setAttribute("id", "asdbasdkbasbidasbdibas");
     this.modalWrapper.setAttribute(
       "style",
-      `width: 100%; height: 100%; position: absolute; background-color: ${
+      `width: 100%; height: 100%; position: absolute; display: flex; flex-direction: column; overflow: hidden; background-color: ${
         transparent ? "transparent" : "white"
       }`
     );
     document.body.appendChild(this.modalWrapper);
-    reactDom.render(
-      children,
-      document.getElementById("asdbasdkbasbidasbdibas")
-    );
+    reactDom.render(children, this.modalWrapper);
   };
   hideModal = () => {
     this.modalWrapper && document.body.removeChild(this.modalWrapper);
