@@ -46,4 +46,5 @@ export default Modal;
 
 Modal.defaultProps = {
   visible: true,
+  transparent: false
 };
