@@ -8,6 +8,13 @@ class TextInput extends React.Component {
     runFunction(onChange, e);
     runFunction(onChangeText, value);
   };
+  onKeyDown = (e) => {
+    const { onKeyDown } = this.props;
+    if (e?.key === "Enter") {
+      this.inputRef.blur();
+    }
+    runFunction(onKeyDown, e);
+  };
   onMouseDown = (e) => {
     e.stopPropagation();
     const { onMouseDown } = this.props;
@@ -15,7 +22,7 @@ class TextInput extends React.Component {
   };
   render() {
     const isMobile = detectMob();
-    const { value, style } = this.props;
+    const { value, style, getRef, ...restProps } = this.props;
     const mergedStyle = { ...style };
     let extraProps = {};
     if (isMobile) {
@@ -53,10 +60,21 @@ class TextInput extends React.Component {
     }
     return (
       <input
-        style={{ border: "none", outline: "none", ...mergedStyle }}
+        ref={(ref) => {
+          this.inputRef = ref;
+          runFunction(getRef, ref);
+        }}
+        style={{
+          border: "none",
+          outline: "none",
+          backgroundColor: "transparent",
+          ...mergedStyle,
+        }}
         type="text"
         value={value}
         onChange={this.onChange}
+        onKeyDown={this.onKeyDown}
+        {...restProps}
         {...extraProps}
       />
     );
