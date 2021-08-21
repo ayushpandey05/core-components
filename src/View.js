@@ -2,6 +2,15 @@ import React from "react";
 import { defaultStyle, runFunction } from "./Utility";
 
 class View extends React.Component {
+  constructor(props) {
+    super(props);
+    if (props?.innerRef && typeof props.innerRef !== "function") {
+      this.viewRef = props.innerRef;
+    } else {
+      this.viewRef = React.createRef();
+    }
+  }
+
   onLayout = () => {
     const { onLayout } = this.props;
     this.viewRef &&
@@ -12,6 +21,17 @@ class View extends React.Component {
   };
 
   componentDidMount() {
+    this.viewRef.current.measure = (callback) => {
+      if (this.viewRef) {
+        let { x, y, top, left, width, height } =
+          this.viewRef.getBoundingClientRect();
+        return runFunction(callback, x, y, width, height, x, y);
+      }
+    };
+    if (typeof this.props?.innerRef === "function") {
+      this.viewRef = this.viewRef.current;
+      this.props.innerRef(this.viewRef);
+    }
     this.onLayout();
   }
   componentDidUpdate() {
@@ -25,17 +45,13 @@ class View extends React.Component {
       onMouseUp,
       onPointerDown,
       onPointerUp,
-      getRef,
       ...restProps
     } = this.props;
     return (
       <div
         style={{ ...defaultStyle, ...style }}
         {...restProps}
-        ref={(e) => {
-          this.viewRef = e;
-          runFunction(getRef, e);
-        }}
+        ref={this.viewRef}
       >
         {children}
       </div>
@@ -43,4 +59,6 @@ class View extends React.Component {
   }
 }
 
-export default View;
+export default React.forwardRef((props, ref) => (
+  <View {...props} innerRef={ref} />
+));

@@ -13,4 +13,6 @@ const FlatList = (props) => {
   return <ScrollView {...restProps}>{component}</ScrollView>;
 };
 
-export default FlatList;
+export default React.forwardRef((props, ref) => (
+  <FlatList {...props} innerRef={ref} />
+));

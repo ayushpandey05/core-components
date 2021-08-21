@@ -2,7 +2,16 @@ import React from "react";
 import { defaultStyle, detectMob, runFunction } from "./Utility";
 
 class TouchableOpacity extends React.Component {
-  state = { active: false };
+  constructor(props) {
+    super(props);
+    this.state = { active: false };
+    if (props?.innerRef && typeof props.innerRef !== "function") {
+      this.touchableOpacityRef = props.innerRef;
+    } else {
+      this.touchableOpacityRef = React.createRef();
+    }
+  }
+
   onPress = (e) => {
     e.stopPropagation();
     const { onPress } = this.props;
@@ -40,11 +49,24 @@ class TouchableOpacity extends React.Component {
     this.touchableOpacityRef &&
       onLayout &&
       onLayout({
-        nativeEvent: { layout: this.touchableOpacityRef.getBoundingClientRect() },
+        nativeEvent: {
+          layout: this.touchableOpacityRef.getBoundingClientRect(),
+        },
       });
   };
 
   componentDidMount() {
+    this.touchableOpacityRef.current.measure = (callback) => {
+      if (this.touchableOpacityRef) {
+        let { x, y, top, left, width, height } =
+          this.touchableOpacityRef.getBoundingClientRect();
+        return runFunction(callback, x, y, width, height, x, y);
+      }
+    };
+    if (typeof this.props?.innerRef === "function") {
+      this.touchableOpacityRef = this.touchableOpacityRef.current;
+      this.props.innerRef(this.touchableOpacityRef);
+    }
     this.onLayout();
   }
   componentDidUpdate() {
@@ -56,7 +78,6 @@ class TouchableOpacity extends React.Component {
       activeOpacity = 0.2,
       style,
       children = void 0,
-      getRef,
       ...restProps
     } = this.props;
     const { active } = this.state;
@@ -76,15 +97,12 @@ class TouchableOpacity extends React.Component {
     }
     return (
       <div
+      {...restProps}
         style={{ cursor: "pointer", ...defaultStyle, ...mergeedStyle }}
-        {...restProps}
         onClick={this.onPress}
         onContextMenu={this.onLongPress}
         {...extraProps}
-        ref={(e) => {
-          this.touchableOpacityRef = e;
-          runFunction(getRef, e);
-        }}
+        ref={this.touchableOpacityRef}
       >
         {children}
       </div>
@@ -92,4 +110,6 @@ class TouchableOpacity extends React.Component {
   }
 }
 
-export default TouchableOpacity;
+export default React.forwardRef((props, ref) => (
+  <TouchableOpacity {...props} innerRef={ref} />
+));

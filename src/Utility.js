@@ -31,9 +31,9 @@ const detectMob = () => {
   }
 };
 
-const runFunction = (func, e) => {
+const runFunction = (func, ...rest) => {
   if (typeof func === "function") {
-    return func(e);
+    return func(...rest);
   }
 };
 

@@ -2,6 +2,14 @@ import React from "react";
 import { defaultStyle, detectMob, runFunction } from "./Utility";
 import "./ScrollView.css";
 class ScrollView extends React.Component {
+  constructor(props) {
+    super(props);
+    if (props?.innerRef && typeof props.innerRef !== "function") {
+      this.scrollViewRef = props?.innerRef;
+    } else {
+      this.scrollViewRef = React.createRef();
+    }
+  }
   onMouseDown = (e) => {
     const { onMouseDown } = this.props;
     e.stopPropagation();
@@ -17,6 +25,17 @@ class ScrollView extends React.Component {
   };
 
   componentDidMount() {
+    this.scrollViewRef.current.measure = (callback) => {
+      if (this.scrollViewRef) {
+        let { x, y, top, left, width, height } =
+          this.scrollViewRef.getBoundingClientRect();
+        return runFunction(callback, x, y, width, height, x, y);
+      }
+    };
+    if (typeof this.props?.innerRef === "function") {
+      this.scrollViewRef = this.scrollViewRef.current;
+      this.props.innerRef(this.scrollViewRef);
+    }
     this.onLayout();
   }
   componentDidUpdate() {
@@ -32,7 +51,6 @@ class ScrollView extends React.Component {
       className,
       showsVerticalScrollIndicator = true,
       showsHorizontalScrollIndicator = true,
-      getRef,
     } = this.props;
 
     let modifiedClassName = className || "";
@@ -72,10 +90,7 @@ class ScrollView extends React.Component {
         className={modifiedClassName}
         style={{ flex: 1, ...defaultStyle, ...topViewStyle }}
         {...extraProps}
-        ref={(e) => {
-          this.scrollViewRef = e;
-          runFunction(getRef, e);
-        }}
+        ref={this.scrollViewRef}
       >
         <div style={{ ...defaultStyle, ...containerStyle }}>{children}</div>
       </div>
@@ -83,4 +98,6 @@ class ScrollView extends React.Component {
   }
 }
 
-export default ScrollView;
+export default React.forwardRef((props, ref) => (
+  <ScrollView {...props} innerRef={ref} />
+));
