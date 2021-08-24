@@ -12,6 +12,8 @@ import Dimensions from "./Dimensions";
 import Linking from "./Linking";
 import TextInput from "./TextInput";
 import Modal from "./Modal";
+import RefreshControl from "./RefreshControl";
+
 export {
   View,
   TouchableOpacity,
@@ -27,4 +29,5 @@ export {
   Linking,
   TextInput,
   Modal,
+  RefreshControl,
 };
