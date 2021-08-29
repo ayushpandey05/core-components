@@ -1,4 +1,5 @@
 import React from "react";
+import StyleSheet from "./StyleSheet";
 import { detectMob, runFunction } from "./Utility";
 
 class TextInput extends React.Component {
@@ -23,7 +24,7 @@ class TextInput extends React.Component {
   render() {
     const isMobile = detectMob();
     const { value, style, getRef, ...restProps } = this.props;
-    const mergedStyle = { ...style };
+    const mergedStyle = { ...StyleSheet.flatten(style) };
     let extraProps = {};
     if (isMobile) {
       extraProps.onPointerDown = this.onMouseDown;

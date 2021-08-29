@@ -10,7 +10,18 @@ const ActivityIndicator = (props) => {
     return null;
   }
 
-  const { transform } = style || {};
+  let { transform } = style || {};
+  let transformStyle = null;
+  if (Array.isArray(transform)) {
+    transformStyle = "";
+    transform.forEach((item) => {
+      let key = Object.keys(item)[0];
+      transformStyle = transformStyle + `${key}(${item[key]})`;
+    });
+    transformStyle = { transform: transformStyle };
+  } else {
+    transformStyle = { transform };
+  }
 
   let indicatorSize = size === "large" ? 36 : 20;
   return (
@@ -18,7 +29,7 @@ const ActivityIndicator = (props) => {
       fill={color}
       width={indicatorSize}
       height={indicatorSize}
-      style={{ transform, margin: "auto" }}
+      style={{ ...transformStyle, alignSelf: "center" }}
     />
   );
 };

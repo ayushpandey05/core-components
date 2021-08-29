@@ -1,11 +1,11 @@
 import React from "react";
 import { defaultStyle, runFunction } from "./Utility";
-
+import StyleSheet from "./StyleSheet";
 class View extends React.Component {
   constructor(props) {
     super(props);
-    if (props?.innerRef && typeof props.innerRef !== "function") {
-      this.viewRef = props.innerRef;
+    if (props?.innerref && typeof props.innerref !== "function") {
+      this.viewRef = props.innerref;
     } else {
       this.viewRef = React.createRef();
     }
@@ -28,9 +28,9 @@ class View extends React.Component {
         return runFunction(callback, x, y, width, height, x, y);
       }
     };
-    if (typeof this.props?.innerRef === "function") {
+    if (typeof this.props?.innerref === "function") {
       this.viewRef = this.viewRef.current;
-      this.props.innerRef(this.viewRef);
+      this.props.innerref(this.viewRef);
     }
     this.onLayout();
   }
@@ -47,9 +47,10 @@ class View extends React.Component {
       onPointerUp,
       ...restProps
     } = this.props;
+    const flattenStyle = StyleSheet.flatten(style);
     return (
       <div
-        style={{ ...defaultStyle, ...style }}
+        style={{ ...defaultStyle, ...flattenStyle }}
         {...restProps}
         ref={this.viewRef}
       >
@@ -60,5 +61,5 @@ class View extends React.Component {
 }
 
 export default React.forwardRef((props, ref) => (
-  <View {...props} innerRef={ref} />
+  <View {...props} innerref={ref} />
 ));

@@ -1,10 +1,12 @@
 import React from "react";
+import StyleSheet from "./StyleSheet";
 import { getModifiedSvgProps } from "./Utility";
 
 class Image extends React.Component {
   render() {
     const { source, style } = this.props;
-    let modifiedStyle = { ...style };
+    const flattenStyle = StyleSheet.flatten(style);
+    let modifiedStyle = { ...flattenStyle };
     let modifiedSource = null;
 
     if (source?.svg) {

@@ -13,6 +13,7 @@ import Linking from "./Linking";
 import TextInput from "./TextInput";
 import Modal from "./Modal";
 import RefreshControl from "./RefreshControl";
+import BackHandler from './BackHandler'
 
 export {
   View,
@@ -30,4 +31,5 @@ export {
   TextInput,
   Modal,
   RefreshControl,
+  BackHandler
 };

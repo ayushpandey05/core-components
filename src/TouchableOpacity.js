@@ -5,8 +5,8 @@ class TouchableOpacity extends React.Component {
   constructor(props) {
     super(props);
     this.state = { active: false };
-    if (props?.innerRef && typeof props.innerRef !== "function") {
-      this.touchableOpacityRef = props.innerRef;
+    if (props?.innerref && typeof props.innerref !== "function") {
+      this.touchableOpacityRef = props.innerref;
     } else {
       this.touchableOpacityRef = React.createRef();
     }
@@ -14,25 +14,34 @@ class TouchableOpacity extends React.Component {
 
   onPress = (e) => {
     e.stopPropagation();
-    const { onPress } = this.props;
-    runFunction(onPress, e);
+    const { onPress, disabled } = this.props;
+    !disabled && runFunction(onPress, e);
   };
   onMouseDown = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const { onPressIn } = this.props;
+    const { onPressIn, disabled } = this.props;
+    if (disabled) {
+      return;
+    }
     if (e?.button === 0) {
       !this.state.active && this.setState({ active: true });
     }
     runFunction(onPressIn, e);
   };
   onMouseUp = (e) => {
-    const { onPressOut } = this.props;
+    const { onPressOut, disabled } = this.props;
+    if (disabled) {
+      return;
+    }
     this.state.active && this.setState({ active: false });
     runFunction(onPressOut, e);
   };
   onMouseLeave = (e) => {
-    const { onMouseLeave, onPointerLeave } = this.props;
+    const { onMouseLeave, onPointerLeave, disabled } = this.props;
+    if (disabled) {
+      return;
+    }
     this.state.active && this.setState({ active: false });
     if (this.isMobile) {
       runFunction(onPointerLeave, e);
@@ -40,9 +49,13 @@ class TouchableOpacity extends React.Component {
       runFunction(onMouseLeave, e);
     }
   };
+  onContextMenu = (e) => {
+    const { onContextMenu, disabled } = this.props;
+    !disabled && runFunction(onContextMenu, e);
+  };
   onLongPress = (e) => {
-    const { onLongPress } = this.props;
-    runFunction(onLongPress, e);
+    const { onLongPress, disabled } = this.props;
+    !disabled && runFunction(onLongPress, e);
   };
   onLayout = () => {
     const { onLayout } = this.props;
@@ -63,9 +76,9 @@ class TouchableOpacity extends React.Component {
         return runFunction(callback, x, y, width, height, x, y);
       }
     };
-    if (typeof this.props?.innerRef === "function") {
+    if (typeof this.props?.innerref === "function") {
       this.touchableOpacityRef = this.touchableOpacityRef.current;
-      this.props.innerRef(this.touchableOpacityRef);
+      this.props.innerref(this.touchableOpacityRef);
     }
     this.onLayout();
   }
@@ -78,6 +91,7 @@ class TouchableOpacity extends React.Component {
       activeOpacity = 0.2,
       style,
       children = void 0,
+      onPress,
       ...restProps
     } = this.props;
     const { active } = this.state;
@@ -90,6 +104,7 @@ class TouchableOpacity extends React.Component {
       extraProps.onPointerDown = this.onMouseDown;
       extraProps.onPointerUp = this.onMouseUp;
       extraProps.onPointerLeave = this.onMouseLeave;
+      extraProps.onContextMenu = this.onContextMenu;
     } else {
       extraProps.onMouseDown = this.onMouseDown;
       extraProps.onMouseUp = this.onMouseUp;
@@ -97,7 +112,7 @@ class TouchableOpacity extends React.Component {
     }
     return (
       <div
-      {...restProps}
+        {...restProps}
         style={{ cursor: "pointer", ...defaultStyle, ...mergeedStyle }}
         onClick={this.onPress}
         onContextMenu={this.onLongPress}
@@ -111,5 +126,5 @@ class TouchableOpacity extends React.Component {
 }
 
 export default React.forwardRef((props, ref) => (
-  <TouchableOpacity {...props} innerRef={ref} />
+  <TouchableOpacity {...props} innerref={ref} />
 ));
