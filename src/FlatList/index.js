@@ -1,6 +1,6 @@
 import React from "react";
-import ScrollView from "./ScrollView";
-import { runFunction } from "./Utility";
+import ScrollView from "../ScrollView";
+import { runFunction } from "../Utility";
 
 const FlatList = (props) => {
   const { data, renderItem, innerref, ...restProps } = props || {};

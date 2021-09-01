@@ -1,6 +1,6 @@
 import React from "react";
-import StyleSheet from "./StyleSheet";
-import { getModifiedSvgProps } from "./Utility";
+import StyleSheet from "../StyleSheet";
+import { getModifiedSvgProps } from "../Utility";
 
 class Image extends React.Component {
   render() {

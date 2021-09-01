@@ -1,6 +1,6 @@
 import React from "react";
-import StyleSheet from "./StyleSheet";
-import { getNumberOfLineStyle } from "./Utility";
+import StyleSheet from "../StyleSheet";
+import { getNumberOfLineStyle } from "../Utility";
 
 const Text = (props) => {
   let { style = {}, numberOfLines: propsNumberOfLines, ...rest } = props;

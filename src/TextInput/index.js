@@ -1,6 +1,6 @@
 import React from "react";
-import StyleSheet from "./StyleSheet";
-import { detectMob, runFunction } from "./Utility";
+import StyleSheet from "../StyleSheet";
+import { detectMob, runFunction } from "../Utility";
 
 class TextInput extends React.Component {
   onChange = (e) => {

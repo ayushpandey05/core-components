@@ -1,6 +1,6 @@
 import React from "react";
 import reactDom from "react-dom";
-import { runFunction } from "./Utility";
+import { runFunction } from "../Utility";
 class Modal extends React.Component {
   showModal = () => {
     const { transparent, children, onShow } = this.props;

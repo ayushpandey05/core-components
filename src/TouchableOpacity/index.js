@@ -1,5 +1,5 @@
 import React from "react";
-import { defaultStyle, detectMob, runFunction } from "./Utility";
+import { defaultStyle, detectMob, runFunction } from "../Utility";
 
 class TouchableOpacity extends React.Component {
   constructor(props) {

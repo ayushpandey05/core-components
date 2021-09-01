@@ -1,6 +1,6 @@
 import React from "react";
-import { defaultStyle, detectMob, runFunction } from "./Utility";
-import StyleSheet from "./StyleSheet";
+import { defaultStyle, detectMob, runFunction } from "../Utility";
+import StyleSheet from "../StyleSheet";
 import "./ScrollView.css";
 class ScrollView extends React.Component {
   constructor(props) {

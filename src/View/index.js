@@ -1,6 +1,6 @@
 import React from "react";
-import { defaultStyle, runFunction } from "./Utility";
-import StyleSheet from "./StyleSheet";
+import { defaultStyle, runFunction } from "../Utility";
+import StyleSheet from "../StyleSheet";
 class View extends React.Component {
   constructor(props) {
     super(props);
