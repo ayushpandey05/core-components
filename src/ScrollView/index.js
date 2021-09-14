@@ -87,7 +87,7 @@ class ScrollView extends React.Component {
       extraProps.onMouseDown = this.onMouseDown;
     }
     return (
-      <div
+      <scrollview
         className={modifiedClassName}
         style={{
           flex: 1,
@@ -97,10 +97,10 @@ class ScrollView extends React.Component {
         {...extraProps}
         ref={this.scrollViewRef}
       >
-        <div style={{ ...defaultStyle, ...StyleSheet.flatten(containerStyle) }}>
+        <container style={{ ...defaultStyle, ...StyleSheet.flatten(containerStyle) }}>
           {children}
-        </div>
-      </div>
+        </container>
+      </scrollview>
     );
   }
 }

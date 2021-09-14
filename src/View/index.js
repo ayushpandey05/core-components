@@ -49,13 +49,13 @@ class View extends React.Component {
     } = this.props;
     const flattenStyle = StyleSheet.flatten(style);
     return (
-      <div
+      <view
         style={{ ...defaultStyle, ...flattenStyle }}
         {...restProps}
         ref={this.viewRef}
       >
         {children}
-      </div>
+      </view>
     );
   }
 }

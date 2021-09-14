@@ -3,7 +3,12 @@ import StyleSheet from "../StyleSheet";
 import { getNumberOfLineStyle } from "../Utility";
 
 const Text = (props) => {
-  let { style = {}, numberOfLines: propsNumberOfLines, ...rest } = props;
+  let {
+    style = {},
+    numberOfLines: propsNumberOfLines,
+    children = void 0,
+    ...rest
+  } = props;
 
   if (Array.isArray(style)) {
     style = StyleSheet.flatten(style);
@@ -25,7 +30,11 @@ const Text = (props) => {
     }
     restStyle["lineHeight"] = lineHeight;
   }
-  return <div {...rest} style={restStyle} />;
+  return (
+    <text {...rest} style={restStyle}>
+      {children}
+    </text>
+  );
 };
 
 export default Text;

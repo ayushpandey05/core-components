@@ -111,7 +111,7 @@ class TouchableOpacity extends React.Component {
       extraProps.onMouseLeave = this.onMouseLeave;
     }
     return (
-      <div
+      <touchableopacity
         {...restProps}
         style={{ cursor: "pointer", ...defaultStyle, ...mergeedStyle }}
         onClick={this.onPress}
@@ -120,7 +120,7 @@ class TouchableOpacity extends React.Component {
         ref={this.touchableOpacityRef}
       >
         {children}
-      </div>
+      </touchableopacity>
     );
   }
 }
