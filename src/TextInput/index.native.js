@@ -1,6 +1,6 @@
 import React from "react";
 import { TextInput as RNTextInput } from "react-native";
-import { runFunction } from "./Utility";
+import { runFunction } from "../Utility";
 
 const TextInput = (props) => {
   return (
